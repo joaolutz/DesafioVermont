@@ -13,38 +13,39 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.joaolutz.desafiovermont.model.Gasto;
-import br.com.joaolutz.desafiovermont.repository.GastoRepository;
+import br.com.joaolutz.desafiovermont.service.GastoService;
+import br.com.joaolutz.desafiovermont.service.Status;
 
 @RestController
 @RequestMapping("/gasto")
 public class GastoController {
 
 	@Autowired
-	private GastoRepository gastoRepository;
+	private GastoService gastoService;
 	
 	@GetMapping
 	public List<Gasto> listar() {
-		return gastoRepository.findAll();
+		return gastoService.listar();
 	}
 	
 	@GetMapping("/{id}")
 	public Gasto consultarPorId(@PathVariable Integer id) {
-		return gastoRepository.findById(id).get();
+		return gastoService.consultarPorId(id);
 	}
 	
 	@PostMapping
 	public Gasto salvar(@RequestBody Gasto gasto) {
-		return gastoRepository.save(gasto);
+		return gastoService.salvar(gasto);
 	}
 	
 	@PutMapping
 	public Gasto alterar(@RequestBody Gasto gasto) {
-		return gastoRepository.save(gasto);
+		return gastoService.alterar(gasto);
 	}
 	
 	@DeleteMapping
-	public void excluir(@RequestBody Gasto gasto) {
-		gastoRepository.delete(gasto);
+	public Status excluir(@RequestBody Gasto gasto) {
+		return gastoService.excluir(gasto);
 	}
 	
 }

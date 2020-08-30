@@ -1,5 +1,6 @@
 package br.com.joaolutz.desafiovermont.model;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -13,8 +14,13 @@ import javax.persistence.TemporalType;
 
 @Entity
 @Table(name="gasto")
-public class Gasto {
+public class Gasto implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	@Id
 	@GeneratedValue
 	@Column(name="ID")
@@ -31,6 +37,21 @@ public class Gasto {
 	@Column(name="TAGS")
 	private String tags;
 	
+	public Gasto() {}
+	
+	public Gasto(String nomePessoa, String descricao, Date dataHora, BigDecimal valor, String tags) {
+		this(null, nomePessoa, descricao, dataHora, valor, tags);
+	}
+	
+	public Gasto(Integer idGasto, String nomePessoa, String descricao, Date dataHora, BigDecimal valor, String tags) {
+		this.idGasto = idGasto;
+		this.nomePessoa = nomePessoa;
+		this.descricao = descricao;
+		this.dataHora = dataHora;
+		this.valor = valor;
+		this.tags = tags;
+	}
+
 	public Integer getIdGasto() {
 		return idGasto;
 	}
