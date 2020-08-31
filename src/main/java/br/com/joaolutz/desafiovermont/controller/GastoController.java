@@ -15,6 +15,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.joaolutz.desafiovermont.model.Gasto;
 import br.com.joaolutz.desafiovermont.service.GastoService;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 
 @RestController
 @RequestMapping("/gastos")
@@ -23,27 +26,56 @@ public class GastoController {
 	@Autowired
 	private GastoService gastoService;
 	
+	@ApiOperation(value = "Retorna uma lista de gastos")
+	@ApiResponses(value = {
+	    @ApiResponse(code = 200, message = "Retorna a lista de pessoa"),
+	    @ApiResponse(code = 204, message = "Nenhum registro foi encontrado"),
+	    @ApiResponse(code = 500, message = "Foi gerada uma exceção")
+	})
 	@GetMapping
 	public ResponseEntity<List<Gasto>> listar() {
 		return gastoService.listar();
 	}
 	
-	@GetMapping("/{id}")
+	@ApiOperation(value = "Retorna um gasto pelo id")
+	@ApiResponses(value = {
+	    @ApiResponse(code = 200, message = "Retorna o gasto solicitado"),
+	    @ApiResponse(code = 404, message = "O registro não foi localizado"),
+	    @ApiResponse(code = 500, message = "Foi gerada uma exceção")
+	})
+	@GetMapping(path="/{id}", consumes="application/json", produces="application/json")
 	public ResponseEntity<Gasto> consultarPorId(@PathVariable Integer id) {
 		return gastoService.consultarPorId(id);
 	}
 	
-	@PostMapping
+	@ApiOperation(value = "Realiza o cadastro um gasto")
+	@ApiResponses(value = {
+	    @ApiResponse(code = 201, message = "O gasto foi cadastrado com sucesso"),
+	    @ApiResponse(code = 500, message = "Foi gerada uma exceção"),
+	})
+	@PostMapping(consumes="application/json", produces="application/json")
 	public ResponseEntity<Gasto> salvar(@RequestBody Gasto gasto) {
 		return gastoService.salvar(gasto);
 	}
 	
-	@PutMapping
+	@ApiOperation(value = "Altera um gasto cadastrado")
+	@ApiResponses(value = {
+	    @ApiResponse(code = 204, message = "O registro foi alterado com sucesso"),
+	    @ApiResponse(code = 404, message = "O registro não foi localizado"),
+	    @ApiResponse(code = 500, message = "Foi gerada uma exceção"),
+	})
+	@PutMapping(consumes="application/json")
 	public ResponseEntity alterar(@RequestBody Gasto gasto) {
 		return gastoService.alterar(gasto);
 	}
 	
-	@DeleteMapping
+	@ApiOperation(value = "Exclui um gasto cadastrado")
+	@ApiResponses(value = {
+			@ApiResponse(code = 204, message = "O registro foi excluído com sucesso"),
+		    @ApiResponse(code = 404, message = "O registro não foi localizado"),
+		    @ApiResponse(code = 500, message = "Foi gerada uma exceção"),
+	})
+	@DeleteMapping(consumes="application/json")
 	public ResponseEntity excluir(@RequestBody Gasto gasto) {
 		return gastoService.excluir(gasto);
 	}

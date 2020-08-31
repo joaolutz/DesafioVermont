@@ -31,8 +31,10 @@ public class GastoService {
 	}
 	
 	public ResponseEntity<Gasto> salvar(@RequestBody Gasto gasto) {
-		gastoRepository.save(gasto);
-		return ResponseEntity.created(UriComponentsBuilder.newInstance().scheme("http").host("localhost:8080").path("/desafiovermont/api/gastos/{id}").buildAndExpand(gasto.getIdGasto()).encode().toUri()).build();
+		Gasto newGasto = gastoRepository.save(gasto);
+		return ResponseEntity.created(UriComponentsBuilder.newInstance().scheme("http")
+				.host("localhost:8080").path("/desafiovermont/api/v1/gastos/{id}")
+				.buildAndExpand(gasto.getIdGasto()).encode().toUri()).body(newGasto);
 	}
 	
 	public ResponseEntity alterar(@RequestBody Gasto gasto) {

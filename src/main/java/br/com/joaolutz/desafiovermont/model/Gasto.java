@@ -12,6 +12,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import io.swagger.annotations.ApiModelProperty;
+
 @Entity
 @Table(name="gasto")
 public class Gasto implements Serializable {
@@ -21,23 +23,38 @@ public class Gasto implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 	
+	@ApiModelProperty(value = "Id do gasto")
 	@Id
 	@GeneratedValue
 	@Column(name="ID")
 	private Integer idGasto;
+	
+	@ApiModelProperty(value = "Nome da Pessoa")
 	@Column(name="NOME_PESSOA")
 	private String nomePessoa;
+	
+	@ApiModelProperty(value = "Descrição do gasto")
 	@Column(name="DESCRICAO")
 	private String descricao;
+	
+	@ApiModelProperty(value = "Data/Hora do gasto")
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="DATA_HORA")
 	private Date dataHora;
+	
+	@ApiModelProperty(value = "Valor do gasto")
 	@Column(name="VALOR")
 	private BigDecimal valor;
+	
+	@ApiModelProperty(value = "Tags relacionadas ao gasto")
 	@Column(name="TAGS")
 	private String tags;
 	
 	public Gasto() {}
+	
+	public Gasto(Integer idGasto) {
+		this.idGasto = idGasto;
+	}
 	
 	public Gasto(String nomePessoa, String descricao, Date dataHora, BigDecimal valor, String tags) {
 		this(null, nomePessoa, descricao, dataHora, valor, tags);
