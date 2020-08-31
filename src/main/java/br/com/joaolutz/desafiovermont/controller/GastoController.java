@@ -3,6 +3,7 @@ package br.com.joaolutz.desafiovermont.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,37 +15,36 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.joaolutz.desafiovermont.model.Gasto;
 import br.com.joaolutz.desafiovermont.service.GastoService;
-import br.com.joaolutz.desafiovermont.service.Status;
 
 @RestController
-@RequestMapping("/gasto")
+@RequestMapping("/gastos")
 public class GastoController {
 
 	@Autowired
 	private GastoService gastoService;
 	
 	@GetMapping
-	public List<Gasto> listar() {
+	public ResponseEntity<List<Gasto>> listar() {
 		return gastoService.listar();
 	}
 	
 	@GetMapping("/{id}")
-	public Gasto consultarPorId(@PathVariable Integer id) {
+	public ResponseEntity<Gasto> consultarPorId(@PathVariable Integer id) {
 		return gastoService.consultarPorId(id);
 	}
 	
 	@PostMapping
-	public Gasto salvar(@RequestBody Gasto gasto) {
+	public ResponseEntity<Gasto> salvar(@RequestBody Gasto gasto) {
 		return gastoService.salvar(gasto);
 	}
 	
 	@PutMapping
-	public Gasto alterar(@RequestBody Gasto gasto) {
+	public ResponseEntity alterar(@RequestBody Gasto gasto) {
 		return gastoService.alterar(gasto);
 	}
 	
 	@DeleteMapping
-	public Status excluir(@RequestBody Gasto gasto) {
+	public ResponseEntity excluir(@RequestBody Gasto gasto) {
 		return gastoService.excluir(gasto);
 	}
 	

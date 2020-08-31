@@ -9,19 +9,13 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import static org.mockito.BDDMockito.given;
-
 import java.math.BigDecimal;
-import java.util.Arrays;
 import java.util.Date;
-import java.util.List;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.gson.GsonAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
@@ -30,8 +24,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import br.com.joaolutz.desafiovermont.controller.GastoController;
 import br.com.joaolutz.desafiovermont.model.Gasto;
-import br.com.joaolutz.desafiovermont.service.GastoService;
-import springfox.documentation.spring.web.json.Json;
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(GastoController.class)
@@ -44,7 +36,7 @@ public class GastoRestControllerIntegrationTest {
     
     @Test
     public void listarGastosTeste() throws Exception {
-        mvc.perform(get("/gasto")
+        mvc.perform(get("/gastos")
           .contentType(MediaType.APPLICATION_JSON))
           .andExpect(status().isOk())
           .andExpect(jsonPath("$[0].idGasto", is(1)));
@@ -52,7 +44,7 @@ public class GastoRestControllerIntegrationTest {
     
     @Test
     public void consultarGastoPorIdTeste() throws Exception {
-        mvc.perform(get("/gasto/1")
+        mvc.perform(get("/gastos/1")
           .contentType(MediaType.APPLICATION_JSON))
           .andExpect(status().isOk())
           .andExpect(jsonPath("$.idGasto", is(1)));
@@ -61,7 +53,7 @@ public class GastoRestControllerIntegrationTest {
     @Test
     public void salvarGastoTeste() throws Exception {
     	Gasto gasto = new Gasto("João Gabriel Messi Lutz", "Teste", new Date(), new BigDecimal(399.9), "Teste tags");
-        mvc.perform(post("/gasto")
+        mvc.perform(post("/gastos")
         		.content(mapper.writeValueAsString(gasto))
         	.accept(MediaType.APPLICATION_JSON)
           .contentType(MediaType.APPLICATION_JSON))
@@ -72,7 +64,7 @@ public class GastoRestControllerIntegrationTest {
     @Test
     public void alterarGastoTeste() throws Exception {
     	Gasto gasto = new Gasto("João Gabriel Messi Lutz", "Teste", new Date(), new BigDecimal(399.9), "Teste tags");
-        mvc.perform(put("/gasto")
+        mvc.perform(put("/gastos")
         		.content(mapper.writeValueAsString(gasto))
         	.accept(MediaType.APPLICATION_JSON)
           .contentType(MediaType.APPLICATION_JSON))
@@ -83,7 +75,7 @@ public class GastoRestControllerIntegrationTest {
     @Test
     public void excluirGastoTeste() throws Exception {
     	Gasto gasto = new Gasto("João Gabriel Messi Lutz", "Teste", new Date(), new BigDecimal(399.9), "Teste tags");
-        mvc.perform(delete("/gasto")
+        mvc.perform(delete("/gastos")
         		.content(mapper.writeValueAsString(gasto))
         	.accept(MediaType.APPLICATION_JSON)
           .contentType(MediaType.APPLICATION_JSON))
