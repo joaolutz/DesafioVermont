@@ -43,7 +43,7 @@ public class GastoController {
 	    @ApiResponse(code = 404, message = "O registro não foi localizado"),
 	    @ApiResponse(code = 500, message = "Foi gerada uma exceção")
 	})
-	@GetMapping(path="/{id}", consumes="application/json", produces="application/json")
+	@GetMapping(path="/{id}", produces="application/json")
 	public ResponseEntity<Gasto> consultarPorId(@PathVariable Integer id) {
 		return gastoService.consultarPorId(id);
 	}
